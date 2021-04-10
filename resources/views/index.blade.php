@@ -2,6 +2,6 @@
 @section('title', 'Laravel')
 @section('content')
 <div class="section-body">
-    Tes
+    Ini isi content
 </div>
 @endsection
