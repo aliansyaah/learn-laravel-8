@@ -22,7 +22,7 @@
                 </tr>
                 @foreach ($inventory as $no => $val)
                     <tr>
-                        <td>{{ $no+1 }}</td>
+                        <td>{{ $inventory->firstItem()+$no }}</td>
                         <td>{{ $val->inventory_kode }}</td>
                         <td>{{ $val->inventory_name }}</td>
                         <td>
@@ -32,6 +32,8 @@
                     </tr>
                 @endforeach
             </table>
+            {{-- For pagination button --}}
+            {{ $inventory->links() }}
         </div>
     </div>
 </div>

@@ -10,7 +10,8 @@ class CrudController extends Controller
     // Tampilkan data
     public function index()
     {
-        $inventory = DB::table('inventory')->get();
+        // $inventory = DB::table('inventory')->get();
+        $inventory = DB::table('inventory')->paginate(3);
         return view('crud', ['inventory' => $inventory]);
     }
 
