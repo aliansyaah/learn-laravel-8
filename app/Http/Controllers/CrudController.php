@@ -3,25 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CrudController extends Controller
 {
     // Tampilkan data
     public function index()
     {
-        // return "Ini tampil data";
-        return view('crud');
+        $inventory = DB::table('inventory')->get();
+        return view('crud', ['inventory' => $inventory]);
     }
 
     // Method untuk menampilkan halaman tambah data
     public function add()
     {
-        return view('crud-tambah-data');
+        return view('crud-add-data');
     }
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('crud-tambah-data');
+        // dd($request->all());    // dump & die
+        DB::insert(
+            'insert into inventory (inventory_kode, inventory_name) values (?, ?)', 
+            [$request->inventory_kode, $request->inventory_name]
+        );
+        return redirect()->route('crud.read');
     }
 
     public function edit()

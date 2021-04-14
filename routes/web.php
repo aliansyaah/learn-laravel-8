@@ -34,3 +34,4 @@ Route::get('crud', function () {
  */
 Route::get('crud', [CrudController::class, 'index'])->name('crud.read');
 Route::get('crud/add', [CrudController::class, 'add'])->name('crud.add');
+Route::post('crud/save', [CrudController::class, 'create'])->name('crud.save');
