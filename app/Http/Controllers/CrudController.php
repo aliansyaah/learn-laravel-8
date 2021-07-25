@@ -28,6 +28,12 @@ class CrudController extends Controller
             'insert into inventory (inventory_kode, inventory_name) values (?, ?)', 
             [$request->inventory_kode, $request->inventory_name]
         );
+
+        // Cara lain
+        // DB::table('inventory')->insert([
+        //     ['inventory_kode' => $request->inventory_kode, 'inventory_name' => $request->inventory_name],
+        //     ['inventory_kode' => $request->inventory_kode.'xx', 'inventory_name' => $request->inventory_name.'xx'],
+        // ]);
         return redirect()->route('crud.read');
     }
 
@@ -41,8 +47,10 @@ class CrudController extends Controller
         return view('crud-tambah-data');
     }
 
-    public function delete()
+    public function delete($id)
     {
-        return view('crud-tambah-data');
+        // echo $id;
+        DB::table('inventory')->where('id', $id)->delete();
+        return redirect()->back();
     }
 }

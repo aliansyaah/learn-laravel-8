@@ -69,6 +69,7 @@
     <script src="../assets/js/stisla.js"></script>
 
     <!-- JS Libraies -->
+    @stack('page-scripts')
 
     <!-- Template JS File -->
     <script src="../assets/js/scripts.js"></script>
@@ -76,6 +77,6 @@
 
     <!-- Page Specific JS File -->
     {{-- Untuk tampung JS sesuai kebutuhan per halaman  --}}
-    @stack('page-scripts')
+    @stack('after-script')
 </body>
 </html>

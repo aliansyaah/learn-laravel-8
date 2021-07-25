@@ -27,14 +27,60 @@
                         <td>{{ $val->inventory_name }}</td>
                         <td>
                             <a href="#" class="badge badge-warning">Edit</a>
-                            <a href="#" class="badge badge-danger">Delete</a>
+
+                            {{-- "id" pada atribut data-id adalah nama dataset --}}
+                            <a href="#" data-id="{{ $val->id }}" class="badge badge-danger swal-confirm">
+                                <form action="{{ route('crud.delete', $val->id) }}" id="deleteForm{{ $val->id }}" method="POST">
+                                <form action="{{ route('crud.delete', $val->id) }}" id="deleteForm" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                </form>
+                                Delete
+                            </a>
                         </td>
                     </tr>
                 @endforeach
             </table>
             {{-- For pagination button --}}
-            {{ $inventory->links() }}
+            {{-- {{ $inventory->links() }} --}}
+            
+            {{-- Pakai versi bootstrap 4 untuk handle bug pagination --}}
+            {{ $inventory->links('pagination::bootstrap-4') }}
         </div>
     </div>
 </div>
 @endsection
+
+@push('page-scripts')
+    {{-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> --}}
+    <script src="{{ asset('assets/modules/sweetalert/sweetalert.min.js') }}"></script>
+@endpush
+
+@push('after-script')
+<script>
+    $(".swal-confirm").click(function(e) {
+        id = e.target.dataset.id;   // didapat dari "data-id" di <a href>
+
+        swal({
+            title: 'Apakah Anda yakin?',
+            text: 'Data yang sudah dihapus tidak bisa dikembalikan lagi!',
+            icon: 'warning',
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                // Saat kita pilih OK
+                // swal('Poof! Your imaginary file has been deleted!', {
+                //     icon: 'success',
+                // });
+                $(`#deleteForm${id}`).submit();
+                // $('#deleteForm').submit();
+            } else {
+                // Saat kita pilih cancel
+                // swal('Your imaginary file is safe!');
+            }
+        });
+    });
+</script>
+@endpush
