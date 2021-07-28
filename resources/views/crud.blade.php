@@ -13,6 +13,18 @@
             <a href="{{ route('crud.add') }}" class="btn btn-icon icon-left btn-primary"><i class="fa fa-plus"></i> Tambah Data</a>
             <hr>
 
+            {{-- Flash message --}}
+            @if (session('message'))
+                <div class="alert alert-success alert-dismissible show fade">
+                    <div class="alert-body">
+                        <button class="close" data-dismiss="alert">
+                            <span>x</span>
+                        </button>
+                        {{ session('message') }}
+                    </div>
+                </div>
+            @endif
+
             <table class="table table-striped table-bordered table-sm">
                 <tr>
                     <th>No.</th>

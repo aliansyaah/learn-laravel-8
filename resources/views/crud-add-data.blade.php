@@ -2,10 +2,10 @@
 @section('title', 'Laravel')
 @section('content')
 <div class="section-body">
-    <h2 class="section-title">Forms</h2>
+    {{-- <h2 class="section-title">Forms</h2>
     <p class="section-lead">
     Examples and usage guidelines for form control styles, layout options, and custom components for creating a wide variety of forms.
-    </p>
+    </p> --}}
 
     <div class="row">
         <div class="col-12 col-md-12 col-lg-12">
@@ -22,14 +22,32 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Kode Barang</label>
-                                    <input type="text" name="inventory_kode" class="form-control">
+                                    {{-- Utk mengubah warna text mjd merah jika ada error --}}
+                                    <label @error('inventory_kode') class="text-danger" @enderror>
+                                        Kode Barang
+                                        {{-- Jika ada error, print pesan error --}}
+                                        @error('inventory_kode')
+                                            | {{ $message }}
+                                        @enderror
+                                    </label>
+                                    {{-- old('attr-name') berfungsi agar ketika user ada kesalahan, valuenya tidak hilang --}}
+                                    <input type="text" name="inventory_kode" class="form-control" value="{{ old('inventory_kode') }}">
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Nama Barang</label>
-                                    <input type="text" name="inventory_name" class="form-control">
+                                    {{-- <label>Nama Barang</label>
+                                    <input type="text" name="inventory_name" class="form-control"> --}}
+                                    {{-- Utk mengubah warna text mjd merah jika ada error --}}
+                                    <label @error('inventory_name') class="text-danger" @enderror>
+                                        Nama Barang
+                                        {{-- Jika ada error, print pesan error --}}
+                                        @error('inventory_name')
+                                            | {{ $message }}
+                                        @enderror
+                                    </label>
+                                    {{-- old('attr-name') berfungsi agar ketika user ada kesalahan, valuenya tidak hilang --}}
+                                    <input type="text" name="inventory_name" class="form-control" value="{{ old('inventory_name') }}">
                                 </div>
                             </div>
                         </div>
