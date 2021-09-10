@@ -34,5 +34,7 @@ Route::get('crud', function () {
  */
 Route::get('crud', [CrudController::class, 'index'])->name('crud.read');
 Route::get('crud/add', [CrudController::class, 'add'])->name('crud.add');
-Route::post('crud/save', [CrudController::class, 'create'])->name('crud.save');
-Route::delete('crud/delete/{id}', [CrudController::class, 'delete'])->name('crud.delete');
+Route::post('crud', [CrudController::class, 'create'])->name('crud.save');
+Route::get('crud/{id}/edit', [CrudController::class, 'edit'])->name('crud.edit');
+Route::patch('crud/{id}', [CrudController::class, 'create'])->name('crud.update');
+Route::delete('crud/{id}', [CrudController::class, 'delete'])->name('crud.delete');
