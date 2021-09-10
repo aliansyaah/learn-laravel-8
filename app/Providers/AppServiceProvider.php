@@ -31,7 +31,7 @@ class AppServiceProvider extends ServiceProvider
         // Untuk handle bug pagination laravel
         // Paginator::useBootstrap();
 
-        // Untuk handle bug Migration Error: Syntax error or access violation: 1071 Specified key was too long; max key length is 767 bytes
+        // Untuk handle Migration Error: Syntax error or access violation: 1071 Specified key was too long; max key length is 767 bytes
         Schema::defaultStringLength(191);
     }
 }

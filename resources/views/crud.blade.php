@@ -38,7 +38,7 @@
                         <td>{{ $val->inventory_kode }}</td>
                         <td>{{ $val->inventory_name }}</td>
                         <td>
-                            <a href="#" class="badge badge-warning">Edit</a>
+                            <a href="{{ route('crud.edit', $val->id) }}" class="badge badge-warning">Edit</a>
 
                             {{-- "id" pada atribut data-id adalah nama dataset --}}
                             <a href="#" data-id="{{ $val->id }}" class="badge badge-danger swal-confirm">

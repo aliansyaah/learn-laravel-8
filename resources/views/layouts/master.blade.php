@@ -15,8 +15,10 @@
     <!-- CSS Libraries -->
 
     <!-- Template CSS -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/components.css">
+    {{-- <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/components.css"> --}}
+    <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}"
+    <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}"
 
     {{-- Untuk page styling --}}
     @stack('page-styles')

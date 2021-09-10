@@ -24,7 +24,31 @@ class CrudController extends Controller
     public function create(Request $request)
     {
         // dd($request->all());    // dump & die
+        $this->_validation($request);
+        
+        DB::insert(
+            'insert into inventory (inventory_kode, inventory_name) values (?, ?)', 
+            [$request->inventory_kode, $request->inventory_name]
+        );
 
+        // Cara lain
+        // DB::table('inventory')->insert([
+        //     ['inventory_kode' => $request->inventory_kode, 'inventory_name' => $request->inventory_name],
+        //     ['inventory_kode' => $request->inventory_kode.'xx', 'inventory_name' => $request->inventory_name.'xx'],
+        // ]);
+        return redirect()->route('crud.read')->with('message', 'Data berhasil disimpan');
+    }
+
+    public function edit($id)
+    {
+        $data_barang = DB::table('inventory')->where('id', $id)->first();
+        // \print_r($data_barang);die;
+        return view('crud-edit-data', ['data_barang' => $data_barang]);
+        // return view('crud-edit-data');
+    }
+
+    private function _validation(Request $request)
+    {
         $validation = $request->validate(
             [
                 'inventory_kode' => 'required|min:3|max:10',
@@ -39,28 +63,17 @@ class CrudController extends Controller
                 'inventory_name.max' => 'Nama barang maksimal 10 digit',
             ]
         );
-
-        DB::insert(
-            'insert into inventory (inventory_kode, inventory_name) values (?, ?)', 
-            [$request->inventory_kode, $request->inventory_name]
-        );
-
-        // Cara lain
-        // DB::table('inventory')->insert([
-        //     ['inventory_kode' => $request->inventory_kode, 'inventory_name' => $request->inventory_name],
-        //     ['inventory_kode' => $request->inventory_kode.'xx', 'inventory_name' => $request->inventory_name.'xx'],
-        // ]);
-        return redirect()->route('crud.read')->with('message', 'Data berhasil disimpan');
     }
 
-    public function edit()
+    public function update(Request $request, $id)
     {
-        return view('crud-tambah-data');
-    }
-
-    public function update()
-    {
-        return view('crud-tambah-data');
+        // print_r($request->all());die;
+        $this->_validation($request);
+        DB::table('inventory')->where('id', $id)->update([
+            'inventory_kode' => $request->inventory_kode,
+            'inventory_name' => $request->inventory_name,
+        ]);
+        return redirect()->route('crud.read')->with('message', 'Data berhasil diperbaharui');
     }
 
     public function delete($id)
