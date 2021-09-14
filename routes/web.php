@@ -14,11 +14,11 @@ use App\Http\Controllers\CrudController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+// Solusi jika controller disimpan di dalam sub folder
+Route::get('/', 'App\Http\Controllers\Auth\AuthController@index')->name('login');
+Route::post('login', 'App\Http\Controllers\Auth\AuthController@login')->name('login');
 
-Route::get('/', function () {
+Route::get('/dashboard', function () {
     return view('index');
 });
 
