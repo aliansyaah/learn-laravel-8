@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CrudController;
+use App\Http\Middleware\CheckLoginMiddleware;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,13 +19,14 @@ use App\Http\Controllers\CrudController;
 Route::get('/', 'App\Http\Controllers\Auth\AuthController@index')->name('login');
 Route::post('login', 'App\Http\Controllers\Auth\AuthController@login')->name('login');
 
-Route::get('/dashboard', function () {
-    return view('index');
-});
-
-Route::get('crud', function () {
-    return view('crud');
-});
+/* Route::get('/dashboard', function () {
+    // Manual check session tanpa middleware
+    if(session('login_success')){
+        return view('index');
+    }else{
+        return redirect('/');
+    }
+}); */
 
 /* Memberi nama alias pada route, agar ketika kita ingin mengubah route tidak perlu 
     mengubah satu-satu di tiap halaman view yang memanggil oute tersebut.
@@ -32,9 +34,19 @@ Route::get('crud', function () {
     Jika route "crud/add" akan diganti mjd "crud/addData", tidak perlu mengubah route 
     di tiap hlm view yang kita buat, cukup di file ini saja.
  */
-Route::get('crud', [CrudController::class, 'index'])->name('crud.read');
-Route::get('crud/add', [CrudController::class, 'add'])->name('crud.add');
-Route::post('crud', [CrudController::class, 'create'])->name('crud.save');
-Route::get('crud/{id}/edit', [CrudController::class, 'edit'])->name('crud.edit');
-Route::patch('crud/{id}', [CrudController::class, 'update'])->name('crud.update');
-Route::delete('crud/{id}', [CrudController::class, 'delete'])->name('crud.delete');
+
+// Route::middleware(['middleware', 'CheckLoginMiddleware'])->group(function () {
+Route::middleware([CheckLoginMiddleware::class])->group(function () {
+// Route::group(['middleware' => 'CheckLoginMiddleware'], function() {
+
+    Route::get('/dashboard', function () { return view('index'); });
+    Route::get('logout', 'App\Http\Controllers\Auth\AuthController@logout')->name('logout');
+    
+    Route::get('crud', [CrudController::class, 'index'])->name('crud.read');
+    Route::get('crud/add', [CrudController::class, 'add'])->name('crud.add');
+    Route::post('crud', [CrudController::class, 'create'])->name('crud.save');
+    Route::get('crud/{id}/edit', [CrudController::class, 'edit'])->name('crud.edit');
+    Route::patch('crud/{id}', [CrudController::class, 'update'])->name('crud.update');
+    Route::delete('crud/{id}', [CrudController::class, 'delete'])->name('crud.delete');
+});
+

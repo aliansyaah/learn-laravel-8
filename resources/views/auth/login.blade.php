@@ -63,7 +63,16 @@
                                     <label class="custom-control-label" for="remember-me">Remember Me</label>
                                     </div>
                                 </div>
-
+                                @if (session('message')) 
+                                    <div class="alert alert-danger alert-dismissible show fade">
+                                        <div class="alert-body">
+                                            <button class="close" data-dismiss="alert">
+                                            <span>×</span>
+                                            </button>
+                                            {{ session('message') }}
+                                        </div>
+                                    </div>
+                                @endif
                                 <div class="form-group">
                                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                                     Login
